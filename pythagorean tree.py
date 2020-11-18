@@ -8,12 +8,13 @@ Created on Tue Nov 17 13:54:41 2020
 import numpy as np
 import matplotlib.pyplot as plt
 
-"""
-Box class. Contains left and right "bottom" vertices, the length of one side
-and the angle that it is rotated with respect to the x-axis.
-"""
+
 
 class Box():
+    """
+    Box class. Contains left and right "bottom" vertices, the length of one side
+    and the angle that it is rotated with respect to the x-axis.
+    """
     def __init__(self, left, right, length, angle):
         self.left = left
         self.right = right
@@ -27,19 +28,21 @@ class Box():
         return np.linalg.norm(self.left-self.right)
     def getAngle(self):
         return self.angle
-"""
-Rotation matrix
-"""
+
 def R_matrix(point, angle):
+    """
+    Rotation matrix
+    """
     matrix = np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle),np.cos(angle)]])
     return matrix@point
 
-"""
-Recursive function.
-Calculate the four points of the current box, plot them, then create two new boxes on top of it with length 1/sqrt(2) and rotations pi/4 and 7pi/4. 
-Then apply it to those two boxes
-"""     
+    
 def recurPythTree(box, count):
+    """
+    Recursive function.
+    Calculate the four points of the current box, plot them, then create two new boxes on top of it with length 1/sqrt(2) and rotations pi/4 and 7pi/4. 
+    Then apply it to those two boxes
+    """ 
     if count>0:
         #Get the coordinates of the four vertices + the initial vertex to create a full plot
         coords = np.array([box.getLeft(), box.getRight(),box.getRight()+R_matrix([[0],[box.getLen()]],box.getAngle() ),box.getLeft()+R_matrix([[0],[box.getLen()]],box.getAngle() ), box.getLeft()])
